@@ -19,8 +19,9 @@ class VisualCrossing implements WeatherInterface
 
     private function buildBaseUrl(): string {
         $url = $this->baseUrl;
-        $url += $this->location[0] . ',' . $this->location[1] . '/';
-        $url += date('d-m-Y\TH:m:s') . '/' . '?timezone=' . $this->timezone;
+        $url .= $this->location[0] . ',' . $this->location[1] . '/';
+        $url .= date('d-m-Y\TH:m:s') . '/' . '?timezone=' . $this->timezone;
+        $url .= '&key=' . $this->secret_key_access;
 
         return $url;
     }
@@ -28,9 +29,8 @@ class VisualCrossing implements WeatherInterface
     public function getApiUrl(): string
     {
         $baseUrl = $this->buildBaseUrl();
-        $baseUrl += '?unitGroup=' . $this->unitGroup;
-        $baseUrl += '&include=alerts,current,stats';
-        $baseUrl += '?key=' . $this->secret_key_access;
+        $baseUrl .= '&unitGroup=' . $this->unitGroup;
+        $baseUrl .= '&include=alerts,current,stats';
 
         return $baseUrl;
     }
