@@ -3,7 +3,7 @@
 namespace App\Domain\Weather;
 
 
-class VisualCrossing implements WeatherInterface
+class VisualCrossingWeather implements WeatherInterface
 {
     private string $timezone;
 
@@ -20,7 +20,7 @@ class VisualCrossing implements WeatherInterface
         $this->secret_key_access ??= env('WEATHER_API_SECRET_ACCESS_KEY');
     }
 
-    private function buildBaseUrl(): string
+    private function buildNewBaseUrl(): string
     {
         $url = $this->baseUrl;
         $url .= $this->location[0] . ',' . $this->location[1] . '/';
@@ -32,7 +32,7 @@ class VisualCrossing implements WeatherInterface
 
     public function getFullUrl(): string
     {
-        $baseUrl = $this->buildBaseUrl();
+        $baseUrl = $this->buildNewBaseUrl();
         $baseUrl .= '&unitGroup=' . $this->unitGroup;
         $baseUrl .= '&include=alerts,current,stats';
 
