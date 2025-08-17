@@ -19,5 +19,5 @@ Projeto simples que consulta dados do clima usando uma API externa e guarda as r
 1. Clone o projeto:
 
 ```bash
-git clone https://github.com/seu-usuario/api-do-clima.git
-cd api-do-clima
+git clone https://github.com/seu-usuario/weather-api.git
+cd weather-api
