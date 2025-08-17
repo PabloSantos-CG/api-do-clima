@@ -26,7 +26,7 @@ class VisualCrossing implements WeatherInterface
         return $url;
     }
 
-    public function getApiUrl(): string
+    public function getFullUrl(): string
     {
         $baseUrl = $this->buildBaseUrl();
         $baseUrl .= '&unitGroup=' . $this->unitGroup;
