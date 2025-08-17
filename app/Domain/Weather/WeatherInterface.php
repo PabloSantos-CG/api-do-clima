@@ -1,6 +1,8 @@
 <?php
 
+namespace App\Domain\Weather;
+
 interface WeatherInterface
 {
-    public function getApiUrl(): string;
+    public function getFullUrl(): string;
 }

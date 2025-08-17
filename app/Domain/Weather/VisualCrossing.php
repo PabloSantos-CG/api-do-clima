@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Domain\Weather;
+
+
 class VisualCrossing implements WeatherInterface
 {
     private string $timezone;
@@ -14,10 +17,11 @@ class VisualCrossing implements WeatherInterface
         private string $baseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/",
     ) {
         $this->timezone = 'Z';
-        $this->secret_key_access??= env('WEATHER_API_SECRET_ACCESS_KEY');
+        $this->secret_key_access ??= env('WEATHER_API_SECRET_ACCESS_KEY');
     }
 
-    private function buildBaseUrl(): string {
+    private function buildBaseUrl(): string
+    {
         $url = $this->baseUrl;
         $url .= $this->location[0] . ',' . $this->location[1] . '/';
         $url .= date('d-m-Y\TH:m:s') . '/' . '?timezone=' . $this->timezone;
