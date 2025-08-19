@@ -3,6 +3,7 @@
 namespace App\Domain\Services;
 
 use App\Domain\Weather\WeatherFactory;
+use App\Utils\TimeFormatter;
 use CacheRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
@@ -20,10 +21,21 @@ class WeatherService
     public function fetchAllCurrentWeatherData(
         string $apiKey,
         array $coordinates
-    ): ?JsonResponse {
+    ): mixed {
         $jsonDataCache = $this->cacheRepository->getKey("$apiKey:data");
 
         if ($jsonDataCache) {
+            $rateLimit = (int) $this->cacheRepository->getKey("$apiKey:rate_limit");
+
+            if ($rateLimit >= 60) {
+                $ttl = $this->cacheRepository->getTtl($apiKey);
+                $time = TimeFormatter::formatTtl($ttl);
+                
+                return [
+                    'rateLimit' => "rate limit reached, service unavailable for $time"
+                ];
+            }
+
             $this->cacheRepository->incrementRateLimit($apiKey);
             return $jsonDataCache;
         }
