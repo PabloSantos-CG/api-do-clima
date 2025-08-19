@@ -42,6 +42,13 @@ class WeatherController extends Controller
             ], 400);
         }
 
+        if (\key_exists('rateLimit', $response)) {
+            return \response()->json([
+                'status' => 'error',
+                'message' => $response['rateLimit'],
+            ], 400);
+        }
+
         return \response()->json($response);
     }
 }
