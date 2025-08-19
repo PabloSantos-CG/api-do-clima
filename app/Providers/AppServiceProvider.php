@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use CacheRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
+use RedisCacheRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(
+            CacheRepositoryInterface::class,
+            RedisCacheRepository::class
+        );
     }
 
     /**

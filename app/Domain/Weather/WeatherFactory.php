@@ -7,7 +7,7 @@ class WeatherFactory
     /** 
      * @param string[] $coordinates 
      */
-    public function make(array $coordinates): WeatherInterface
+    public function make(array $coordinates): VisualCrossingWeather
     {
         return new VisualCrossingWeather($coordinates);
     }

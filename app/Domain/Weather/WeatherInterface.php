@@ -4,5 +4,6 @@ namespace App\Domain\Weather;
 
 interface WeatherInterface
 {
-    public function getFullUrl(): string;
+    // get url of all data
+    public function getUrlForAllData(): string;
 }

@@ -24,13 +24,13 @@ class VisualCrossingWeather implements WeatherInterface
     {
         $url = $this->baseUrl;
         $url .= $this->location[0] . ',' . $this->location[1] . '/';
-        $url .= date('d-m-Y\TH:m:s') . '/' . '?timezone=' . $this->timezone;
+        $url .= date('Y-m-d\TH:m:s') . '/' . '?timezone=' . $this->timezone;
         $url .= '&key=' . $this->secret_key_access;
 
         return $url;
     }
 
-    public function getFullUrl(): string
+    public function getUrlForAllData(): string
     {
         $baseUrl = $this->buildNewBaseUrl();
         $baseUrl .= '&unitGroup=' . $this->unitGroup;
