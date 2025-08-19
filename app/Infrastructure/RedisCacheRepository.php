@@ -17,4 +17,8 @@ class RedisCacheRepository implements CacheRepositoryInterface
     public function incrementRateLimit(string $key): int {
         return Redis::incr($key);
     }
+
+    public function getTtl(string $key): string {
+        return Redis::ttl($key);
+    }
 }
