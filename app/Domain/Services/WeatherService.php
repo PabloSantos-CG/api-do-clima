@@ -4,6 +4,7 @@ namespace App\Domain\Services;
 
 use App\Domain\Weather\WeatherFactory;
 use CacheRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 
 class WeatherService
@@ -13,29 +14,28 @@ class WeatherService
         private CacheRepositoryInterface $cacheRepository,
     ) {}
 
-    /** @param string[] $coordinates */
+    /** 
+     * @param string[] $coordinates 
+     */
     public function fetchAllCurrentWeatherData(
         string $apiKey,
         array $coordinates
-    ) {
-        $jsonData = $this->cacheRepository->getKey($apiKey);
+    ): ?JsonResponse {
+        $jsonDataCache = $this->cacheRepository->getKey("$apiKey:data");
 
-        if ($jsonData) {
-            
-            return $jsonData;
+        if ($jsonDataCache) {
+            $this->cacheRepository->incrementRateLimit($apiKey);
+            return $jsonDataCache;
         }
 
-
         $url = $this->weatherFactory->make($coordinates)->getUrlForAllData();
-        // return Http::get($url);
-
         $response = Http::get($url);
 
-        $this->cacheRepository->setKey(
-            $apiKey,
-            $response->json(),
-            3600,
-        );
-        $this->cacheRepository->setKey("$apiKey:request_counter", 0, 86400);
+        if (!$response->successful()) return null;
+
+        $this->cacheRepository->setKey("$apiKey:data", $response->json(), 3600);
+        $this->cacheRepository->setKey("$apiKey:rate_limit", 0, 86400);
+
+        return $response->json();
     }
 }
