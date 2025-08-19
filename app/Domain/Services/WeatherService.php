@@ -5,7 +5,6 @@ namespace App\Domain\Services;
 use App\Domain\Weather\WeatherFactory;
 use App\Utils\TimeFormatter;
 use CacheRepositoryInterface;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 
 class WeatherService
@@ -30,7 +29,7 @@ class WeatherService
             if ($rateLimit >= 60) {
                 $ttl = $this->cacheRepository->getTtl($apiKey);
                 $time = TimeFormatter::formatTtl($ttl);
-                
+
                 return [
                     'rateLimit' => "rate limit reached, service unavailable for $time"
                 ];
