@@ -35,16 +35,13 @@ class WeatherController extends Controller
             $coordinates
         );
 
-        if (!$response->successful()) {
+        if (!$response) {
             return \response()->json([
                 'status' => 'error',
                 'message' => 'api indisponível',
             ], 400);
         }
 
-        return \response()->json(
-            $response->json(),
-            $response->status()
-        );
+        return \response()->json($response);
     }
 }
