@@ -21,3 +21,5 @@ Projeto simples que consulta dados do clima usando uma API externa e guarda as r
 ```bash
 git clone https://github.com/seu-usuario/weather-api.git
 cd weather-api
+
+GET /weather?api_key={api_key}&latitude={latitude}&longitude={longitude}
