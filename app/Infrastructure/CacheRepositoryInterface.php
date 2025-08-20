@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Infrastructure;
+
 interface CacheRepositoryInterface
 {
     public function getKey(string $key): mixed;
