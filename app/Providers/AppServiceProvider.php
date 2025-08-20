@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use CacheRepositoryInterface;
+use App\Infrastructure\CacheRepositoryInterface;
+use App\Infrastructure\RedisCacheRepository;
 use Illuminate\Support\ServiceProvider;
-use RedisCacheRepository;
+
 
 class AppServiceProvider extends ServiceProvider
 {
