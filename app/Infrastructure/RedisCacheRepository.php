@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Infrastructure;
 use Illuminate\Support\Facades\Redis;
 
 class RedisCacheRepository implements CacheRepositoryInterface
@@ -11,7 +12,9 @@ class RedisCacheRepository implements CacheRepositoryInterface
 
     public function setKey(string $key, mixed $value, int $ttl): bool
     {
-        return Redis::set($key, $value, 'NX', 'EX', $ttl);
+        $result = Redis::set($key, $value, 'NX', 'EX', $ttl);
+
+        return $result === 'OK' ? \true : \false;
     }
 
     public function incrementRateLimit(string $key): int {
