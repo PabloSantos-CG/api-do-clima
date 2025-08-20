@@ -13,8 +13,13 @@ class WeatherController extends Controller
 
     public function getAllData(Request $request)
     {
-        $apiKey = $request->input('api_key');
-        $coordinates = $request->input('coordinates');
+        $apiKey = $request->query('api_key');
+        $coordinates = [];
+        $coordinates[] = $request->query('latitude');
+        $coordinates[] = $request->query('longitude');
+
+        // $apiKey = $request->input('api_key');
+        // $coordinates = $request->input('coordinates');
 
         if (!$apiKey) {
             return \response()->json([
@@ -26,9 +31,11 @@ class WeatherController extends Controller
         if (!$coordinates || \count($coordinates) != 2) {
             return \response()->json([
                 'status' => 'error',
-                'message' => 'coordinate property not found',
+                'message' => 'invalid coordinate',
             ], 400);
         }
+
+
 
         $response = $this->weatherService->fetchAllCurrentWeatherData(
             $apiKey,

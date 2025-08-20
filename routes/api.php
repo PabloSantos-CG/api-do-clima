@@ -5,4 +5,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/ping', fn() => ['pong' => true]);
 
-Route::post('/weather', [WeatherController::class, 'getAllData']);
+Route::get('/weather', [WeatherController::class, 'getAllData']);
